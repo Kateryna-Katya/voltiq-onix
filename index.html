@@ -1,56 +1,424 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/voltiq-onix/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vanilla App Template</title>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voltiq-Onix | Инновационная IT-школа</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230022FF'/%3E%3Cpath d='M16 7l9 5.2v10.4l-9 5.2-9-5.2V12.2L16 7z' stroke='%23FF6B00' stroke-width='2.5' fill='none'/%3E%3Ccircle cx='16' cy='16' r='3.5' fill='%23FF6B00'/%3E%3C/svg%3E">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <script type="module" crossorigin src="/voltiq-onix/index.js"></script>
-    <link rel="stylesheet" crossorigin href="/voltiq-onix/assets/styles-guStct1H.css">
+    <link rel="stylesheet" crossorigin href="/voltiq-onix/assets/styles-BLSA1pN2.css">
   </head>
   <body>
     <header class="header">
-  <div class="container">
-    <nav class="nav">
-      <a class="nav-logo" href="./index.html" aria-label="Site logo">
-        <svg class="nav-logo-icon" width="100" height="30">
-          <use href="{=$icon-path}"></use>
-        </svg>
+  <div class="container header__container">
+      <a href="/" class="logo">
+          <span class="logo__text">Voltiq<span class="logo__dot">-</span>Onix</span>
       </a>
-      <ul class="nav-list">
-        <li class="nav-item">
-          <a class="nav-link {=$highlight-act}" href="./page-2.html">Page 2</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {=$highlight-curr}" href="./page-3.html">Page 3</a>
-        </li>
-      </ul>
-    </nav>
+
+      <nav class="nav" id="nav-menu">
+          <ul class="nav__list">
+              <li class="nav__item"><a href="#" class="nav__link">Главная</a></li>
+              <li class="nav__item"><a href="#platform" class="nav__link">Платформа</a></li>
+              <li class="nav__item"><a href="#benefits" class="nav__link">Преимущества</a></li>
+              <li class="nav__item"><a href="#innovations" class="nav__link">Инновации</a></li>
+              <li class="nav__item"><a href="#academy" class="nav__link">Академия</a></li>
+          </ul>
+      </nav>
+
+      <div class="header__actions">
+          <a href="#contact" class="btn btn--primary">Начать</a>
+          <button class="burger" id="burger-menu" aria-label="Открыть меню">
+              <span></span>
+          </button>
+      </div>
   </div>
 </header>
-
+<div class="mobile-overlay" id="mobile-overlay"></div>
 
     <main>
       <!-- Loads the specified .html file -->
-      
+      <section class="hero" id="hero">
+  <canvas id="hero-canvas" class="hero__canvas"></canvas>
+
+  <div class="container hero__container">
+      <div class="hero__content">
+          <div class="hero__badge">Платформа года</div>
+
+          <h1 class="hero__title text-reveal">
+              Инновационная технология:<br>
+              Воплотите мечты в реальность
+          </h1>
+
+          <p class="hero__description text-reveal">
+              Передовая цифровая инфраструктура для старта в IT. Платформа уже доступна в Европе. Удобная адаптация без сложностей и экспертная поддержка на всех этапах.
+          </p>
+
+          <div class="hero__actions">
+              <a href="#contact" class="btn btn--primary">Начать сейчас</a>
+              <a href="#platform" class="btn btn--secondary">Оценить перспективы</a>
+          </div>
+      </div>
+
+      <div class="hero__decoration">
+          <div class="glass-card glass-card--1">
+              <i data-lucide="cpu" class="icon-large"></i>
+              <span>AI-инструменты</span>
+          </div>
+          <div class="glass-card glass-card--2">
+              <i data-lucide="globe-2" class="icon-large"></i>
+              <span>Доступ в ЕС</span>
+          </div>
+      </div>
+  </div>
+</section>
+<section class="platform" id="platform">
+  <div class="container platform__container">
+      <div class="platform__grid">
+          <div class="platform__image-side reveal">
+              <div class="platform__img-wrapper">
+                  <img src="/voltiq-onix/assets/one-CyUlrXAj.jpg" alt="Platform Interface">
+                  <div class="platform__experience-badge">
+                      <span class="number">2026</span>
+                      <span class="label">Технология года</span>
+                  </div>
+              </div>
+          </div>
+
+          <div class="platform__text-side">
+              <h2 class="section-title reveal">Переосмыслите подход к развитию в IT</h2>
+              <p class="section-subtitle reveal">Платформа уже доступна в Европе и предлагает решение, которое меняет правила игры.</p>
+
+              <div class="platform__features">
+                  <div class="feature-item reveal">
+                      <div class="feature-item__icon">
+                          <i data-lucide="zap"></i>
+                      </div>
+                      <div class="feature-item__text">
+                          <h3>Быстрый и лёгкий старт</h3>
+                          <p>Подключение занимает всего 2 минуты. Пошаговый путь, понятный каждому пользователю.</p>
+                      </div>
+                  </div>
+
+                  <div class="feature-item reveal">
+                      <div class="feature-item__icon">
+                          <i data-lucide="shield-check"></i>
+                      </div>
+                      <div class="feature-item__text">
+                          <h3>Проверенный партнер</h3>
+                          <p>Экспертная поддержка на всех этапах и методологии, доказавшие свою эффективность в ЕС.</p>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="reveal">
+                  <a href="#contact" class="btn btn--primary">Получить больше информации</a>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+<section class="benefits" id="benefits">
+  <div class="container">
+      <div class="benefits__header">
+          <h2 class="section-title reveal">Почему выбирают Voltiq-Onix</h2>
+          <p class="section-subtitle reveal">Решения, которые меняют правила игры в сфере IT-образования.</p>
+      </div>
+
+      <div class="benefits__grid">
+          <div class="benefit-card reveal" style="transition-delay: 0.1s;">
+              <div class="benefit-card__number">01</div>
+              <div class="benefit-card__icon">
+                  <i data-lucide="trending-up"></i>
+              </div>
+              <h3 class="benefit-card__title">Стратегия роста на базе инноваций</h3>
+              <p class="benefit-card__text">Мы внедряем практики, применимые уже сегодня, чтобы вы могли оценить перспективы проекта с первого дня.</p>
+          </div>
+
+          <div class="benefit-card reveal" style="transition-delay: 0.2s;">
+              <div class="benefit-card__number">02</div>
+              <div class="benefit-card__icon">
+                  <i data-lucide="wallet"></i>
+              </div>
+              <h3 class="benefit-card__title">Программа пассивного дохода</h3>
+              <p class="benefit-card__text">Уникальная технология для пассивного дохода выпускников. Постройте карьеру, которая работает на вас.</p>
+          </div>
+
+          <div class="benefit-card reveal" style="transition-delay: 0.3s;">
+              <div class="benefit-card__number">03</div>
+              <div class="benefit-card__icon">
+                  <i data-lucide="layers"></i>
+              </div>
+              <h3 class="benefit-card__title">Технологии нового поколения</h3>
+              <p class="benefit-card__text">Доступ к платформе открыт для всех резидентов Европы. Обучение на реальных AI-инструментах.</p>
+          </div>
+
+          <div class="benefit-card reveal" style="transition-delay: 0.4s;">
+              <div class="benefit-card__number">04</div>
+              <div class="benefit-card__icon">
+                  <i data-lucide="users"></i>
+              </div>
+              <h3 class="benefit-card__title">Поддержка по всем вопросам</h3>
+              <p class="benefit-card__text">Бесплатная консультация по всем вопросам и экспертное сопровождение до момента вашего трудоустройства.</p>
+          </div>
+      </div>
+  </div>
+</section>
+<section class="innovations" id="innovations">
+  <div class="container">
+      <div class="innovations__grid">
+          <div class="innovations__text-side">
+              <h2 class="section-title reveal">Технологии нового поколения</h2>
+              <p class="section-subtitle reveal">Мы создали передовую цифровую инфраструктуру, чтобы вы обучались на решениях, которые меняют правила игры.</p>
+
+              <div class="tabs-nav reveal">
+                  <button class="tab-btn active" data-tab="ai">AI-инструменты</button>
+                  <button class="tab-btn" data-tab="cloud">Облачная среда</button>
+                  <button class="tab-btn" data-tab="ecosystem">Экосистема</button>
+              </div>
+          </div>
+
+          <div class="innovations__content-side reveal">
+              <div class="tab-content active" id="ai">
+                  <div class="tech-card">
+                      <div class="tech-card__header">
+                          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                          <span class="tech-card__label">neural_processor.sh</span>
+                      </div>
+                      <div class="tech-card__body">
+                          <h3>AI-инструменты для реальных задач</h3>
+                          <p>Интеграция нейросетей в процесс написания кода. Автоматизация рутины и фокус на архитектуре проекта.</p>
+                          <ul class="tech-list">
+                              <li><i data-lucide="check-circle-2"></i> Оптимизация алгоритмов</li>
+                              <li><i data-lucide="check-circle-2"></i> Предиктивная аналитика</li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="tab-content" id="cloud">
+                  <div class="tech-card">
+                      <div class="tech-card__header">
+                          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                          <span class="tech-card__label">cloud_deploy.yml</span>
+                      </div>
+                      <div class="tech-card__body">
+                          <h3>Передовая инфраструктура</h3>
+                          <p>Собственные сервера в ЕС для развертывания ваших проектов. Легко разобраться без опыта системного администрирования.</p>
+                          <ul class="tech-list">
+                              <li><i data-lucide="check-circle-2"></i> 99.9% Up-time</li>
+                              <li><i data-lucide="check-circle-2"></i> Масштабирование в 1 клик</li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="tab-content" id="ecosystem">
+                  <div class="tech-card">
+                      <div class="tech-card__header">
+                          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                          <span class="tech-card__label">global_network.js</span>
+                      </div>
+                      <div class="tech-card__body">
+                          <h3>Единая цифровая среда</h3>
+                          <p>Платформа уже доступна в Европе. Взаимодействуйте с менторами и студентами в реальном времени через интегрированные чаты.</p>
+                          <ul class="tech-list">
+                              <li><i data-lucide="check-circle-2"></i> Совместный кодинг</li>
+                              <li><i data-lucide="check-circle-2"></i> Прямой доступ к API ЕС</li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+<section class="academy" id="academy">
+  <div class="container">
+      <div class="academy__header">
+          <h2 class="section-title reveal">Экспертная поддержка на всех этапах</h2>
+          <p class="section-subtitle reveal">Методологии, доказавшие эффективность. Постройте карьеру под руководством практиков из индустрии.</p>
+      </div>
+
+      <div class="academy__grid">
+          <div class="mentor-card reveal">
+              <div class="mentor-card__img-container">
+                  <img src="/voltiq-onix/assets/two-UOP-APyx.jpg" alt="Mentor 1" class="mentor-card__img">
+                  <div class="mentor-card__scan-line"></div>
+                  <div class="mentor-card__overlay"></div>
+              </div>
+              <div class="mentor-card__info">
+                  <div class="mentor-card__role">Senior AI Engineer</div>
+                  <h3 class="mentor-card__name">Марко Белуччи</h3>
+                  <p class="mentor-card__bio">Специалист по внедрению AI-инструментов в реальные бизнес-задачи. Опыт работы в тех-гигантах Милана.</p>
+                  <div class="mentor-card__tags">
+                      <span>#Python</span>
+                      <span>#NeuralNetworks</span>
+                  </div>
+              </div>
+          </div>
+
+          <div class="mentor-card reveal" style="transition-delay: 0.2s;">
+              <div class="mentor-card__img-container">
+                  <img src="/voltiq-onix/assets/three-Pd98LQTm.jpg" alt="Mentor 2" class="mentor-card__img">
+                  <div class="mentor-card__scan-line"></div>
+                  <div class="mentor-card__overlay"></div>
+              </div>
+              <div class="mentor-card__info">
+                  <div class="mentor-card__role">Lead Web Architect</div>
+                  <h3 class="mentor-card__name">Алессандро Риччи</h3>
+                  <p class="mentor-card__bio">Переосмыслил подход к развитию фронтенд-архитектуры. Создатель передовой цифровой инфраструктуры школы.</p>
+                  <div class="mentor-card__tags">
+                      <span>#JavaScript</span>
+                      <span>#React</span>
+                  </div>
+              </div>
+          </div>
+
+          <div class="mentor-card reveal" style="transition-delay: 0.4s;">
+              <div class="mentor-card__img-container">
+                  <img src="/voltiq-onix/assets/four-CCMOig73.jpg" alt="Mentor 3" class="mentor-card__img">
+                  <div class="mentor-card__scan-line"></div>
+                  <div class="mentor-card__overlay"></div>
+              </div>
+              <div class="mentor-card__info">
+                  <div class="mentor-card__role">Cybersecurity Expert</div>
+                  <h3 class="mentor-card__name">Джулия Новак</h3>
+                  <p class="mentor-card__bio">Обеспечивает безопасность решений, которые меняют правила игры. Куратор программы пассивного дохода.</p>
+                  <div class="mentor-card__tags">
+                      <span>#Security</span>
+                      <span>#EthicalHacking</span>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="academy__cta reveal">
+          <p>Хотите получить бесплатную консультацию по всем вопросам?</p>
+          <a href="#contact" class="btn btn--primary">Запросить доступ</a>
+      </div>
+  </div>
+</section>
+<section class="contact" id="contact">
+  <div class="container">
+      <div class="contact__grid">
+          <div class="contact__info-side reveal">
+              <h2 class="section-title">Готовы начать?</h2>
+              <p class="section-subtitle">Оставьте заявку на бесплатную консультацию. Наш эксперт свяжется с вами в течение 15 минут.</p>
+
+              <div class="contact__status">
+                  <span class="status-dot"></span>
+                  Доступ к платформе открыт в Италии
+              </div>
+          </div>
+
+          <div class="contact__form-side reveal">
+              <form class="form" id="contact-form">
+                  <div class="form__group">
+                      <label for="name" class="form__label">Ваше имя</label>
+                      <input type="text" id="name" name="name" class="form__input" placeholder="Иван Иванов" required>
+                  </div>
+
+                  <div class="form__group">
+                      <label for="email" class="form__label">Электронная почта</label>
+                      <input type="email" id="email" name="email" class="form__input" placeholder="email@example.com" required>
+                  </div>
+
+                  <div class="form__group">
+                      <label for="phone" class="form__label">Телефон (только цифры)</label>
+                      <input type="tel" id="phone" name="phone" class="form__input" placeholder="39021234567" required>
+                  </div>
+
+                  <div class="form__group">
+                      <label class="form__label">Подтвердите, что вы не робот: <span id="captcha-question"></span></label>
+                      <input type="number" id="captcha-answer" class="form__input" placeholder="Ответ" required>
+                  </div>
+
+                  <div class="form__checkbox">
+                      <input type="checkbox" id="consent" required>
+                      <label for="consent">Я согласен с <a href="./personal-data-policy.html">политикой конфиденциальности</a></label>
+                  </div>
+
+                  <button type="submit" class="btn btn--primary form__submit">Отправить запрос</button>
+
+                  <div class="form__success" id="form-success">
+                      <i data-lucide="check-circle"></i>
+                      <p>Запрос успешно отправлен! Ожидайте звонка.</p>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</section>
     </main>
 
     <footer class="footer">
-  <div class="container">
-    <p class="footer-desc">
-      Made with ✨ by
-      <a
-        class="footer-link"
-        href="https://goit.global/ua/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        GoIT team
-      </a>
-    </p>
+  <div class="container footer__grid">
+      <div class="footer__col footer__col--info">
+          <a href="/" class="logo logo--footer">
+              <span class="logo__text">Voltiq-Onix</span>
+          </a>
+          <p class="footer__description">
+              Передовая цифровая инфраструктура для обучения IT-специалистов. Постройте карьеру, которая работает на вас.
+          </p>
+      </div>
+
+      <div class="footer__col">
+          <h4 class="footer__title">Навигация</h4>
+          <ul class="footer__links">
+              <li><a href="#platform">Платформа</a></li>
+              <li><a href="#benefits">Преимущества</a></li>
+              <li><a href="#innovations">Инновации</a></li>
+              <li><a href="#academy">Академия</a></li>
+          </ul>
+      </div>
+
+      <div class="footer__col">
+          <h4 class="footer__title">Документы</h4>
+          <ul class="footer__links">
+              <li><a href="privacy.html">Privacy Policy</a></li>
+              <li><a href="cookies.html">Cookies Policy</a></li>
+              <li><a href="terms.html">Terms of Use</a></li>
+              <li><a href="return.html">Return Policy</a></li>
+              <li><a href="personal-data-policy.html">Personal Data</a></li>
+          </ul>
+      </div>
+
+      <div class="footer__col footer__col--contacts">
+          <h4 class="footer__title">Контакты</h4>
+          <ul class="footer__contacts">
+              <li>
+                  <i data-lucide="phone" class="icon"></i>
+                  <a href="tel:+390212345678">+39 02 123 456 78</a>
+              </li>
+              <li>
+                  <i data-lucide="mail" class="icon"></i>
+                  <a href="mailto:hello@voltiq-onix.blog">hello@voltiq-onix.blog</a>
+              </li>
+              <li>
+                  <i data-lucide="map-pin" class="icon"></i>
+                  <span>Via Dante, 15, 20121 Milano MI, Italy</span>
+              </li>
+          </ul>
+      </div>
+  </div>
+  <div class="container footer__bottom">
+      <p>&copy; 2026 Voltiq-Onix. Платформа года. Все права защищены.</p>
   </div>
 </footer>
-
+    <div class="cookie-popup" id="cookie-popup">
+      <div class="cookie-popup__content">
+          <p>Этот сайт использует cookies для улучшения работы. Подробнее — в нашей <a href="./cookies.html">Cookie политике</a>.</p>
+          <button class="btn btn--primary cookie-accept" id="cookie-accept">Принять</button>
+      </div>
+  </div>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://unpkg.com/split-type"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
   </body>
 </html>
