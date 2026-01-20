@@ -1,29 +1,24 @@
 /**
- * VOLTIQ-ONIX BLOG - CORE ENGINE 2026
- * ----------------------------------
- * Содержит: GSAP Animations, Vanilla ScrollReveal,
- * Mobile Menu, Tabs, Form Validation, Canvas BG.
+ * VOLTIQ-ONIX 2026 - FINAL ENGINE (FULL SCREEN MENU)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. ИНИЦИАЛИЗАЦИЯ ИКОНОК И ПЛАГИНОВ
   if (typeof lucide !== 'undefined') lucide.createIcons();
   if (typeof gsap !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
-  // --- 2. МОБИЛЬНОЕ МЕНЮ (Z-INDEX FIX) ---
+  // --- 1. УПРАВЛЕНИЕ ПОЛНОЭКРАННЫМ МЕНЮ ---
   const burger = document.getElementById('burger-menu');
   const nav = document.getElementById('nav-menu');
-  const overlay = document.getElementById('mobile-overlay');
-  const navLinks = document.querySelectorAll('.nav__link');
+  const navLinks = document.querySelectorAll('.nav__link, .header__actions .btn');
+  const header = document.querySelector('.header');
 
   const toggleMenu = (state) => {
       const isActive = state !== undefined ? state : !nav.classList.contains('active');
 
       burger.classList.toggle('active', isActive);
       nav.classList.toggle('active', isActive);
-      overlay.classList.toggle('active', isActive);
 
-      // Блокируем скролл при открытом меню
+      // Блокируем скролл, чтобы при скролле внутри меню не двигался сайт
       document.body.style.overflow = isActive ? 'hidden' : '';
   };
 
@@ -34,230 +29,118 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  if (overlay) overlay.addEventListener('click', () => toggleMenu(false));
-
+  // Универсальная навигация: скролл на главной / переход с других страниц
   navLinks.forEach(link => {
-      link.addEventListener('click', () => toggleMenu(false));
-  });
+      link.addEventListener('click', (e) => {
+          const href = link.getAttribute('href');
 
+          if (href && href.includes('#')) {
+              const parts = href.split('#');
+              const targetId = '#' + parts[parts.length - 1];
+              const targetElement = document.querySelector(targetId);
 
-  // --- 3. HERO АНИМАЦИЯ (GSAP + SPLITTYPE) ---
-  // Используем типы 'words, chars', чтобы SplitType обернул слова в отдельные контейнеры
-  // CSS класс .word { white-space: nowrap; } предотвратит разрывы.
-  const heroTitleText = document.querySelector('.hero__title');
-  if (heroTitleText && typeof SplitType !== 'undefined') {
-      const heroTitle = new SplitType(heroTitleText, { types: 'words, chars' });
-      const heroDesc = new SplitType('.hero__description', { types: 'words' });
+              if (targetElement) {
+                  e.preventDefault();
+                  toggleMenu(false); // Закрываем полноэкранное меню
 
-      const heroTl = gsap.timeline({ defaults: { ease: "power4.out" } });
-
-      heroTl
-          .from('.hero__badge', { opacity: 0, y: -20, duration: 0.8, delay: 0.5 })
-          .from(heroTitle.chars, {
-              opacity: 0,
-              y: 50,
-              rotateX: -90,
-              stagger: 0.02,
-              duration: 1
-          }, "-=0.5")
-          .from(heroDesc.words, {
-              opacity: 0,
-              y: 10,
-              stagger: 0.01,
-              duration: 0.8
-          }, "-=0.8")
-          .from('.hero__actions', {
-              opacity: 0,
-              y: 30,
-              duration: 1,
-              clearProps: "all" // Очищаем стили после анимации для работы hover/z-index
-          }, "-=0.6")
-          .from('.glass-card', {
-              opacity: 0,
-              scale: 0.8,
-              stagger: 0.2,
-              duration: 1
-          }, "-=1");
-  }
-
-
-  // --- 4. ВАНИЛЬНЫЙ SCROLL REVEAL (INTERSECTION OBSERVER) ---
-  const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-          if (entry.isIntersecting) {
-              entry.target.classList.add('active');
-              revealObserver.unobserve(entry.target);
+                  setTimeout(() => {
+                      const hOffset = header.offsetHeight;
+                      const pos = targetElement.getBoundingClientRect().top + window.pageYOffset - hOffset;
+                      window.scrollTo({ top: pos, behavior: 'smooth' });
+                  }, 100);
+              } else {
+                  toggleMenu(false);
+              }
           }
       });
+  });
+
+  // --- 2. HERO АНИМАЦИЯ ---
+  const hTitle = document.querySelector('.hero__title');
+  if (hTitle && typeof SplitType !== 'undefined') {
+      const splitT = new SplitType(hTitle, { types: 'words, chars' });
+      const heroTl = gsap.timeline({ defaults: { ease: "power4.out" } });
+      heroTl.from('.hero__badge', { opacity: 0, y: -20, duration: 0.8, delay: 0.3 })
+            .from(splitT.chars, { opacity: 0, y: 50, rotateX: -90, stagger: 0.02, duration: 1 }, "-=0.5")
+            .from('.hero__description', { opacity: 0, y: 20, duration: 0.8 }, "-=0.8")
+            .from('.hero__actions', { opacity: 0, y: 20, duration: 0.8, clearProps: "all" }, "-=0.5");
+  }
+
+  // --- 3. SCROLL REVEAL (ВАННИЛА) ---
+  const revObs = new IntersectionObserver((ents) => {
+      ents.forEach(en => { if (en.isIntersecting) { en.target.classList.add('active'); revObs.unobserve(en.target); } });
   }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
 
-  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-
-  // --- 5. ТАБЫ (INNOVATIONS SECTION) ---
-  const tabButtons = document.querySelectorAll('.tab-btn');
-  const tabContents = document.querySelectorAll('.tab-content');
-
-  tabButtons.forEach(button => {
-      button.addEventListener('click', () => {
-          const target = button.getAttribute('data-tab');
-
-          tabButtons.forEach(btn => btn.classList.remove('active'));
-          tabContents.forEach(content => content.classList.remove('active'));
-
-          button.classList.add('active');
-          const activeContent = document.getElementById(target);
-          if (activeContent) activeContent.classList.add('active');
-
+  // --- 4. ТАБЫ ---
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-tab');
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+          btn.classList.add('active');
+          const target = document.getElementById(id);
+          if (target) target.classList.add('active');
           if (typeof lucide !== 'undefined') lucide.createIcons();
       });
   });
 
-
-  // --- 6. ФОРМА КОНТАКТОВ (VALIDATION + CAPTCHA) ---
-  const form = document.getElementById('contact-form');
-  if (form) {
-      const phoneInput = document.getElementById('phone');
-      const captchaLabel = document.getElementById('captcha-question');
-      const successMessage = document.getElementById('form-success');
-
-      // Генерация капчи
-      const n1 = Math.floor(Math.random() * 10) + 1;
-      const n2 = Math.floor(Math.random() * 10) + 1;
-      const correctResult = n1 + n2;
-      if (captchaLabel) captchaLabel.textContent = `${n1} + ${n2} = ?`;
-
-      // Валидация телефона (только цифры)
-      phoneInput.addEventListener('input', (e) => {
-          e.target.value = e.target.value.replace(/[^0-9]/g, '');
-      });
-
-      form.addEventListener('submit', (e) => {
+  // --- 5. ФОРМА ---
+  const f = document.getElementById('contact-form');
+  if (f) {
+      const ph = document.getElementById('phone');
+      const capL = document.getElementById('captcha-question');
+      const v1 = Math.floor(Math.random() * 10), v2 = Math.floor(Math.random() * 5) + 1, res = v1 + v2;
+      if (capL) capL.textContent = `${v1} + ${v2} = ?`;
+      ph.addEventListener('input', (e) => e.target.value = e.target.value.replace(/[^0-9]/g, ''));
+      f.addEventListener('submit', (e) => {
           e.preventDefault();
-          const userAns = parseInt(document.getElementById('captcha-answer').value);
-
-          if (userAns !== correctResult) {
-              alert('Ошибка: Математический ответ неверный.');
-              return;
-          }
-
-          const btn = form.querySelector('.form__submit');
-          btn.textContent = 'Обработка...';
-          btn.style.opacity = '0.5';
-          btn.disabled = true;
-
-          // Имитация отправки
-          setTimeout(() => {
-              successMessage.classList.add('active');
-              if (typeof lucide !== 'undefined') lucide.createIcons();
-          }, 1500);
+          if (parseInt(document.getElementById('captcha-answer').value) !== res) { alert('Ошибка капчи'); return; }
+          f.querySelector('.form__submit').textContent = 'Отправка...';
+          setTimeout(() => { document.getElementById('form-success').classList.add('active'); if (typeof lucide !== 'undefined') lucide.createIcons(); }, 1500);
       });
   }
 
+  // --- 6. COOKIE ---
+  const cp = document.getElementById('cookie-popup'), ca = document.getElementById('cookie-accept');
+  if (cp && !localStorage.getItem('voltiq_onix_c')) setTimeout(() => cp.classList.add('active'), 3000);
+  if (ca) ca.addEventListener('click', () => { localStorage.setItem('voltiq_onix_c', 't'); cp.classList.remove('active'); });
 
-  // --- 7. COOKIE POPUP ---
-  const cookiePopup = document.getElementById('cookie-popup');
-  const cookieAccept = document.getElementById('cookie-accept');
-
-  if (cookiePopup && !localStorage.getItem('voltiq_cookies_accepted')) {
-      setTimeout(() => cookiePopup.classList.add('active'), 3000);
-  }
-
-  if (cookieAccept) {
-      cookieAccept.addEventListener('click', () => {
-          localStorage.setItem('voltiq_cookies_accepted', 'true');
-          cookiePopup.classList.remove('active');
-      });
-  }
-
-
-  // --- 8. HEADER SCROLL EFFECT ---
-  const header = document.querySelector('.header');
+  // --- 7. HEADER EFFECT ---
   window.addEventListener('scroll', () => {
-      if (window.scrollY > 60) {
-          header.style.padding = '12px 0';
-          header.style.background = 'rgba(0, 34, 255, 0.98)';
-      } else {
-          header.style.padding = '20px 0';
-          header.style.background = 'rgba(0, 34, 255, 0.8)';
-      }
+      header.style.padding = window.scrollY > 50 ? '10px 0' : '20px 0';
+      header.style.background = window.scrollY > 50 ? 'rgba(0, 34, 255, 0.98)' : 'rgba(0, 34, 255, 0.8)';
   });
 
-  // --- 9. HERO CANVAS (NEURAL NETWORK) ---
+  // --- 8. CANVAS BG ---
   initHeroCanvas();
 });
 
-/**
-* Отрисовка интерактивного фона на Canvas
-*/
 function initHeroCanvas() {
-  const canvas = document.getElementById('hero-canvas');
-  if (!canvas) return;
+  const canvas = document.getElementById('hero-canvas'); if (!canvas) return;
   const ctx = canvas.getContext('2d');
   let particles = [];
-
-  const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-  };
-
-  class Particle {
-      constructor() {
-          this.x = Math.random() * canvas.width;
-          this.y = Math.random() * canvas.height;
-          this.vx = (Math.random() - 0.5) * 0.4;
-          this.vy = (Math.random() - 0.5) * 0.4;
-          this.radius = Math.random() * 1.5 + 1;
-      }
-      update() {
-          this.x += this.vx;
-          this.y += this.vy;
-          if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-          if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-      }
-      draw() {
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-          ctx.fillStyle = '#FF6B00';
-          ctx.fill();
-      }
+  const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+  class P {
+      constructor() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.vx = (Math.random()-0.5)*0.3; this.vy = (Math.random()-0.5)*0.3; }
+      update() { this.x+=this.vx; this.y+=this.vy; if(this.x<0||this.x>canvas.width)this.vx*=-1; if(this.y<0||this.y>canvas.height)this.vy*=-1; }
   }
-
   const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
       particles.forEach(p => {
-          p.update();
-          p.draw();
+          p.update(); ctx.beginPath(); ctx.arc(p.x, p.y, 1.2, 0, Math.PI*2);
+          ctx.fillStyle = 'rgba(255, 107, 0, 0.6)'; ctx.fill();
       });
-
-      // Рисуем линии между точками
       for (let i = 0; i < particles.length; i++) {
           for (let j = i + 1; j < particles.length; j++) {
-              const dx = particles[i].x - particles[j].x;
-              const dy = particles[i].y - particles[j].y;
-              const dist = Math.sqrt(dx * dx + dy * dy);
-
-              if (dist < 150) {
-                  ctx.beginPath();
-                  ctx.strokeStyle = `rgba(255, 107, 0, ${1 - dist/150})`;
-                  ctx.lineWidth = 0.5;
-                  ctx.moveTo(particles[i].x, particles[i].y);
-                  ctx.lineTo(particles[j].x, particles[j].y);
-                  ctx.stroke();
-              }
+              const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y, d = Math.sqrt(dx*dx+dy*dy);
+              if (d < 140) { ctx.beginPath(); ctx.strokeStyle = `rgba(255, 107, 0, ${1 - d/140})`; ctx.lineWidth = 0.4; ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke(); }
           }
       }
       requestAnimationFrame(animate);
   };
-
   window.addEventListener('resize', resize);
   resize();
-
-  // Создаем частицы в зависимости от ширины экрана
-  const count = Math.min(Math.floor(window.innerWidth / 15), 100);
-  for (let i = 0; i < count; i++) {
-      particles.push(new Particle());
-  }
+  for (let i = 0; i < 80; i++) particles.push(new P());
   animate();
 }
